@@ -12,6 +12,8 @@ items = []
 
 # Set up the loop to go through all the pages
 while True:
+    print(f"{page}")
+
     # Construct the full URL with the page parameter
     url = f"{base_url}&page={page}#items"
 
@@ -31,10 +33,6 @@ while True:
         # Add the item to the list
         items.append([title, price, ""])
 
-    # Increment the page number
-    page += 1
-    print(f"{page}")
-
     li_list = soup.find('nav', attrs={'aria-label': 'Pagination of listings'}).find_all('li', class_="wt-action-group__item-container")
 
     last_button = li_list[-1]
@@ -43,6 +41,9 @@ while True:
         time.sleep(0.1)
     else:
         break
+
+    # Increment the page number
+    page += 1
 
 
 # Write the items to a CSV file
