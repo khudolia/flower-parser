@@ -1,4 +1,5 @@
 import csv
+import re
 import time
 from bs4 import BeautifulSoup
 import requests
@@ -28,10 +29,13 @@ while True:
     for item_div in item_divs:
         # Get the title and price of the item
         title = item_div.find('h3', class_='v2-listing-card__title').text.strip()
+        subtotal_price = item_div.find('span', class_='currency-value').text.strip()
         price = item_div.find('p', class_='search-collage-promotion-price').find('span', class_='currency-value').text.strip()
+        discount_text = item_div.find('p', class_='wt-text-caption search-collage-promotion-price wt-text-slime wt-text-truncate wt-no-wrap').find_all("span")[-1].text.strip()
+        discount = re.sub("[^0-9]", "", discount_text)
 
         # Add the item to the list
-        items.append([title, price, ""])
+        items.append([title, price, f"{discount}%", subtotal_price, ""])
 
     li_list = soup.find('nav', attrs={'aria-label': 'Pagination of listings'}).find_all('li', class_="wt-action-group__item-container")
 
@@ -49,5 +53,5 @@ while True:
 # Write the items to a CSV file
 with open('items.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
-    writer.writerow(["Title", "Price", "Sold Out Count"])
+    writer.writerow(["Title", "Total Price", "Discount", "Subtotal price", "Sold Out Count"])
     writer.writerows(items)
