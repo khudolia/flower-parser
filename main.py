@@ -38,7 +38,7 @@ while True:
         id = item_div['data-listing-id']
 
         # Add the item to the list
-        items.append([id, title, price, f"{discount}%", subtotal_price, ""])
+        items.append([id, title, price, f"{discount}%", subtotal_price, 0])
 
     li_list = soup.find('nav', attrs={'aria-label': 'Pagination of listings'}).find_all('li', class_="wt-action-group__item-container")
 
