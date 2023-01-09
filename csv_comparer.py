@@ -20,11 +20,11 @@ with open('items.csv', 'r') as items, open('solds.csv', 'r') as solds:
             #print(f"compare: {item[0]} : {sold[0]}")
             #print(f"{row} .")
             if item[0] == sold[0]:
-                #df.loc[row-1, 'Sold Out Count'] = int(df.loc[row-1, 'Sold Out Count']) + 1
+                df.loc[row-1, 'Sold Out Count'] = int(df.loc[row-1, 'Sold Out Count']) + 1
                 print(f"same: {sold[0]}")
             row += 1
 
         #print(page)
         page += 1
 
-    #df.to_csv("result.csv", index=False)
+    df.to_csv("result.csv", index=False)
